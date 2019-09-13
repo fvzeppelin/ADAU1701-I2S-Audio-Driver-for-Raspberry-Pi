@@ -40,11 +40,11 @@
     fragment@1 {
         target-path = "/";
         __overlay__ {
-            codec_out: spdif-transmitter {
+            codec_out: pcm5102a-codec {
                 #address-cells = <0>;
                 #size-cells = <0>;
                 #sound-dai-cells = <0>;
-                compatible = "linux,spdif-dit";
+                compatible = "ti,pcm5102a";
                 status = "okay";
             };
         };
