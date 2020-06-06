@@ -11,7 +11,7 @@ I exchanged the spdif-transmitter driver with the pcm5102a driver to make it wor
 https://forums.slimdevices.com/showthread.php?110964-ADAU1701-with-piCorePlayer&p=977571&viewfull=1#post977571)
 
 ### For wiring and ADAU1701 configuration see the following description:
-https://digital-audio-labs.jimdofree...01-i2s-driver/
+https://digital-audio-labs.jimdofree.com/english/raspberry-pi/adau1701-i2s-driver/
 
 ### Device Tree Overlay
 * Copy `adau1701-i2s.dtbo` to `boot/overlays/`
