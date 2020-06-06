@@ -10,13 +10,13 @@ I exchanged the spdif-transmitter driver with the pcm5102a driver to make it wor
 (as documented here:
 https://forums.slimdevices.com/showthread.php?110964-ADAU1701-with-piCorePlayer&p=977571&viewfull=1#post977571)
 
-### For wiring and ADAU1701 configuration see following description:
+### For wiring and ADAU1701 configuration see the following description:
 https://digital-audio-labs.jimdofree...01-i2s-driver/
 
-### Devie Tree Overlay
+### Device Tree Overlay
 * Copy `adau1701-i2s.dtbo` to `boot/overlays/`
-* Change file content of `boot/config.txt`:
-  * Search following line and comment with hash:
+* Change the content of `boot/config.txt`:
+  * Search the following line and comment with hash:
 `#dtparam=audio=on`
   *  Add the following line at the end of the file:
 `dtoverlay=adau1701-i2s`
