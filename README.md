@@ -6,12 +6,35 @@ https://github.com/MKSounds/ADAU1701-I2S-Audio-Driver-for-Raspberry-Pi
 
 I exchanged the spdif-transmitter driver with the pcm5102a driver to make it work with piCorePlayer.
 
+## Wiring and ADAU1701 configuration:
+From
+https://digital-audio-labs.jimdofree.com/english/raspberry-pi/adau1701-i2s-driver/
+
+In brief:
+###  Wiring Raspberry to ADAU1701
+* Pin 12 (PCM_CLK)  -  MP5 and MP11
+* Pin 35 (PCM_FS)  -  MP4 and MP10
+* Pin 40 (PCM_DOUT)  -  MP0 (or MP1, MP2, MP3)
+* Pin 39 (GND)  -  any GND-Pin 
+
+### Configuration - ADAU1701
+* Sample rate: 48 kHz
+* Bit depth: 24 bit
+* Data format: I2S
+<!-- -->
+* Clock master at the I²S output!
+* MCLK = 256 * Fs = 12.288 MHz
+* BCLK = 64 * Fs = 3.072 MHz  --> Internal / 16
+* LRCLK = Fs = 48 kHz  --> Internal / 1024
+<!-- -->
+* LRCLK polarity: falling edge (LRCLK = 0 = left channel, LRCLK = 1 = right channel)
+* BCLK data change: falling edge
+* Transmission: MSB first
+* MSB position: delayed by 1 BCLK 
+
 ## Installation in piCorePlayer
 (as documented here:
 https://forums.slimdevices.com/showthread.php?110964-ADAU1701-with-piCorePlayer&p=977571&viewfull=1#post977571)
-
-### For wiring and ADAU1701 configuration see the following description:
-https://digital-audio-labs.jimdofree.com/english/raspberry-pi/adau1701-i2s-driver/
 
 ### Device Tree Overlay
 * Copy `adau1701-i2s.dtbo` to `boot/overlays/`
@@ -35,3 +58,17 @@ Subdevice #0: subdevice #0
 * ALSA setting (`<b>:<p>:<f>:<m>:<d>`) -> `80::24:1:`
 * Max sample rate (-r) -> 48000
 * Upsample setting (-R) -> vLX
+
+### Optional: adapt ALSA config file
+Add the following lines to the ALSA config file `/etc/asound.conf`:
+```
+pcm.InterpolatedOutput {
+        type plug
+        slave {
+                pcm "hw:0,0"
+                format S24_LE
+                rate 48000
+        }
+}
+pcm.!default InterpolatedOutput 
+```
